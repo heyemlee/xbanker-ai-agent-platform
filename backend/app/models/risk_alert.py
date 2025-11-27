@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON, Date
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..database import Base
@@ -18,6 +18,12 @@ class RiskAlert(Base):
     summary = Column(Text, nullable=False)
     next_steps = Column(Text, nullable=True)
     
+    # Queue management (NEW)
+    status = Column(String(20), nullable=False, default="Open", index=True)  # Open, Under Review, Escalated, Closed
+    priority = Column(String(20), nullable=False, default="Medium")  # Low, Medium, High, Critical
+    sla_due_date = Column(DateTime, nullable=True, index=True)  # When alert must be reviewed by
+    assigned_to = Column(String(255), nullable=True)  # User/analyst assigned
+    
     # Original input data
     raw_activity_log = Column(Text, nullable=True)
     
@@ -26,6 +32,7 @@ class RiskAlert(Base):
     
     # Relationships
     client = relationship("Client", back_populates="risk_alerts")
+    cases = relationship("Case", back_populates="alert", cascade="all, delete-orphan")
     
     def __repr__(self):
-        return f"<RiskAlert(id={self.id}, severity={self.severity}, client_id={self.client_id})>"
+        return f"<RiskAlert(id={self.id}, severity={self.severity}, status={self.status}, client_id={self.client_id})>"

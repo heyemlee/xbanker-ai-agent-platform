@@ -27,5 +27,5 @@ def get_db():
 
 def init_db():
     """Initialize database tables"""
-    from .models import client, risk_alert  # Import models to register them
+    from .models import client, risk_alert, case, kyc_record  # Import all models to register them
     Base.metadata.create_all(bind=engine)

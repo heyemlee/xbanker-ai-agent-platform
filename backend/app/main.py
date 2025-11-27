@@ -4,7 +4,7 @@ import logging
 
 from .config import settings
 from .database import init_db
-from .api import kyc, risk, clients, dashboard, agents
+from .api import kyc, risk, clients, dashboard, agents, cases
 
 # Configure logging
 logging.basicConfig(
@@ -37,6 +37,7 @@ app.include_router(risk.router)
 app.include_router(clients.router)
 app.include_router(dashboard.router)
 app.include_router(agents.router)
+app.include_router(cases.router)
 
 
 @app.on_event("startup")

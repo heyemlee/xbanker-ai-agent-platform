@@ -3,13 +3,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { LayoutDashboard, ShieldAlert, Users, FileText, Settings, LogOut, Brain } from 'lucide-react';
+import { LayoutDashboard, ShieldAlert, Users, FileText, Settings, LogOut, Brain, Briefcase } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/kyc', label: 'KYC Workflows', icon: FileText },
     { href: '/risk', label: 'Risk Surveillance', icon: ShieldAlert },
+    { href: '/cases', label: 'Cases / Alerts', icon: Briefcase },
     { href: '/clients', label: 'Clients', icon: Users },
     { href: '/agents', label: 'AI Agents', icon: Brain },
 ];

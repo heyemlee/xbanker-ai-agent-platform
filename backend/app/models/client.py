@@ -21,7 +21,7 @@ class Client(Base):
     pep_flag = Column(Boolean, default=False)
     sanctions_flag = Column(Boolean, default=False)
     
-    # Risk assessment (populated by AI)
+    # Risk assessment (populated by AI) - Current/Latest
     risk_score = Column(String(20), nullable=True)  # Low, Medium, High
     risk_rationale = Column(Text, nullable=True)
     kyc_summary = Column(Text, nullable=True)
@@ -29,12 +29,18 @@ class Client(Base):
     # Original input data
     raw_kyc_notes = Column(Text, nullable=True)
     
+    # Client lifecycle management (NEW)
+    status = Column(String(20), nullable=False, default="Active")  # Active, Onboarding, Under Review
+    next_review_date = Column(Date, nullable=True)  # When next KYC review is due
+    
     # Timestamps
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     # Relationships
     risk_alerts = relationship("RiskAlert", back_populates="client", cascade="all, delete-orphan")
+    kyc_records = relationship("KYCRecord", back_populates="client", cascade="all, delete-orphan")
+    cases = relationship("Case", back_populates="client", cascade="all, delete-orphan")
     
     def __repr__(self):
-        return f"<Client(id={self.id}, name={self.full_name}, risk={self.risk_score})>"
+        return f"<Client(id={self.id}, name={self.full_name}, risk={self.risk_score}, status={self.status})>"

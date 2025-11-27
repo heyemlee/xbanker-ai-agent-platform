@@ -13,7 +13,19 @@ class ClientInsights(BaseModel):
 
 class DashboardStats(BaseModel):
     """Response schema for dashboard statistics"""
+    # Client Perspective
     total_clients: int
     high_risk_clients: int
+    
+    # Legacy fields (for backward compatibility)
     open_risk_alerts: int
     recent_kyc_analyses: int
+    
+    # Case Perspective (NEW)
+    open_cases: int
+    new_alerts_today: int
+    new_alerts_7days: int
+    
+    # Compliance Health (NEW)
+    kyc_uptodate_percentage: float
+    kyc_upcoming_reviews: int

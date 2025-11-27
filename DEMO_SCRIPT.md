@@ -191,7 +191,7 @@ KYC Notes: [Use the same KYC notes from earlier]
 
 ### Highlight Key Features:
 
-#### 1. Multi-Agent Orchestration
+#### 1. Multi-Agent Orchestration,,
 **"This demonstrates coordinated agent workflows - exactly what you need for complex compliance processes."**
 
 #### 2. RAG (Retrieval-Augmented Generation)

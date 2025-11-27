@@ -101,19 +101,53 @@ export default function HomePage() {
                     trend="2%"
                 />
                 <StatItem
-                    title="Open Alerts"
-                    value={loading ? '-' : stats?.open_risk_alerts}
+                    title="Open Cases"
+                    value={loading ? '-' : stats?.open_cases}
                     icon={Activity}
                     trend="5%"
                 />
                 <StatItem
-                    title="KYC Analyses"
-                    value={loading ? '-' : stats?.recent_kyc_analyses}
+                    title="New Alerts (7d)"
+                    value={loading ? '-' : stats?.new_alerts_7days}
                     icon={FileText}
                     trend="8%"
                     chart
                 />
             </div>
+
+            {/* Compliance Health Section */}
+            {!loading && stats && (
+                <Card title="Compliance Health">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-sm font-medium text-slate-700">KYC Up-to-date</h4>
+                                <span className={cn(
+                                    "text-2xl font-bold",
+                                    stats.kyc_uptodate_percentage >= 90 ? "text-success-text" :
+                                        stats.kyc_uptodate_percentage >= 75 ? "text-warning-text" : "text-danger-text"
+                                )}>
+                                    {stats.kyc_uptodate_percentage.toFixed(1)}%
+                                </span>
+                            </div>
+                            <p className="text-xs text-slate-500">
+                                Percentage of clients with current KYC reviews
+                            </p>
+                        </div>
+                        <div>
+                            <div className="flex justify-between items-start mb-2">
+                                <h4 className="text-sm font-medium text-slate-700">Upcoming Reviews (30d)</h4>
+                                <span className="text-2xl font-bold text-slate-900">
+                                    {stats.kyc_upcoming_reviews}
+                                </span>
+                            </div>
+                            <p className="text-xs text-slate-500">
+                                Clients requiring KYC review in next 30 days
+                            </p>
+                        </div>
+                    </div>
+                </Card>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Recent Activity / Alerts */}

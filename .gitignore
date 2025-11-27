@@ -41,3 +41,4 @@ yarn-error.log*
 # Build
 dist/
 build/
+DEMO_SCRIPT.md
