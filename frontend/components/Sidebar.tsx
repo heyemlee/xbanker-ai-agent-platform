@@ -62,19 +62,25 @@ export default function Sidebar() {
 
             {/* Footer */}
             <div className="p-4 border-t border-slate-200">
-                <button className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md w-full hover:bg-slate-100 transition-colors">
+                <Link
+                    href="/settings"
+                    className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md w-full hover:bg-slate-100 transition-colors"
+                >
                     <Settings size={18} className="text-slate-400" />
                     Settings
-                </button>
-                <div className="mt-4 flex items-center gap-3 px-3">
-                    <div className="w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-brand font-medium text-xs">
+                </Link>
+                <Link
+                    href="/profile"
+                    className="mt-4 flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-100 transition-colors group"
+                >
+                    <div className="w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-brand font-medium text-xs group-hover:ring-2 group-hover:ring-brand/20 transition-all">
                         JD
                     </div>
                     <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-slate-900 truncate">John Doe</p>
                         <p className="text-xs text-slate-500 truncate">Compliance Officer</p>
                     </div>
-                </div>
+                </Link>
             </div>
         </aside>
     );

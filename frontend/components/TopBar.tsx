@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Bell, HelpCircle } from 'lucide-react';
+import { Search, HelpCircle } from 'lucide-react';
+import NotificationDropdown from './NotificationDropdown';
 
 export default function TopBar() {
     const router = useRouter();
@@ -36,10 +37,7 @@ export default function TopBar() {
                 <button className="text-slate-400 hover:text-slate-600 transition-colors">
                     <HelpCircle size={20} />
                 </button>
-                <button className="relative text-slate-400 hover:text-slate-600 transition-colors">
-                    <Bell size={20} />
-                    <span className="absolute top-0 right-0 w-2 h-2 bg-danger-text rounded-full ring-2 ring-white" />
-                </button>
+                <NotificationDropdown />
             </div>
         </header>
     );

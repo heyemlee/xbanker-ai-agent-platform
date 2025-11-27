@@ -118,8 +118,9 @@ Respond ONLY with the JSON object, no additional text."""
                 raise ValueError(f"Unknown template type: {template_type}")
             
             # Call OpenAI API
+            # Force gpt-4o to avoid env var conflicts causing 400 error
             response = client.chat.completions.create(
-                model=settings.OPENAI_MODEL,
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "system",
@@ -168,8 +169,9 @@ Respond ONLY with the JSON object, no additional text."""
                 raise ValueError(f"Unknown template type: {template_type}")
             
             # Call OpenAI API
+            # Force gpt-4o to avoid env var conflicts causing 400 error
             response = client.chat.completions.create(
-                model=settings.OPENAI_MODEL,
+                model="gpt-4o",
                 messages=[
                     {
                         "role": "system",

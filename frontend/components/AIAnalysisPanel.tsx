@@ -176,8 +176,10 @@ export default function AIAnalysisPanel({
                 <Card className="flex-1 flex flex-col h-full" noPadding>
                     <div className="p-6 border-b border-slate-100 bg-slate-50/50">
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="w-10 h-10 bg-brand text-white rounded-lg flex items-center justify-center shadow-sm">
-                                <Sparkles size={20} />
+                            <div className="w-10 h-10 bg-brand/10 text-brand rounded-lg flex items-center justify-center border border-brand/20">
+                                {templateType === 'KYC_ANALYSIS' ? <FileText size={20} /> :
+                                    templateType === 'RISK_SURVEILLANCE' ? <Shield size={20} /> :
+                                        <Sparkles size={20} />}
                             </div>
                             <div>
                                 <h3 className="font-bold text-slate-900">{title || 'AI Analysis'}</h3>
