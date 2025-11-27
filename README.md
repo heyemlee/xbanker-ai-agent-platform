@@ -1,23 +1,26 @@
-# xBanker AI Agent Suite MVP
+# xBanker AI Agent Suite
 
-**Intelligent Automation for Private Banks & External Asset Managers**
+**Unified Compliance Platform for Private Banks & External Asset Managers**
 
-A full-stack web application showcasing AI-powered KYC workflows, dynamic risk surveillance, and client 360 insights for private banking and wealth management institutions.
+A full-stack web application showcasing AI-powered compliance workflows with unified analysis, case management, and client 360 insights for private banking and wealth management institutions.
 
 ---
 
 ## 🎯 Overview
 
-xBanker addresses critical pain points in private banking:
+xBanker addresses critical pain points in private banking compliance:
 - Manual KYC verification and compliance monitoring
 - Fragmented data across systems
-- Slow client onboarding
+- Slow client onboarding and review processes
 - High operational costs and error risk
+- Inefficient case management and alert handling
 
-The MVP demonstrates three core modules:
-1. **KYC Workflow Automation** - AI-powered document analysis and risk assessment
-2. **Dynamic Risk Surveillance** - Real-time activity monitoring and risk detection
-3. **Client 360 Insights** - AI-generated summaries for relationship managers
+The platform demonstrates five core modules:
+1. **KYC Workflow Automation** - AI-powered document analysis with unified analysis panel
+2. **Risk Surveillance** - Real-time activity monitoring and risk pattern detection
+3. **Case & Alert Management** - Centralized compliance investigation workspace
+4. **Client 360 Views** - Comprehensive client profiles with historical tracking
+5. **AI Agent Orchestration** - Multi-agent workflows for complex analysis
 
 ---
 
@@ -27,7 +30,7 @@ The MVP demonstrates three core modules:
 - **Framework:** FastAPI (Python 3.11+)
 - **Database:** SQLite (PostgreSQL-compatible schema)
 - **ORM:** SQLAlchemy 2.0
-- **AI/ML:** OpenAI API (GPT-4 or GPT-3.5-turbo)
+- **AI/ML:** OpenAI API (GPT-4 or GPT-4o-mini)
 - **Validation:** Pydantic v2
 
 ### Frontend
@@ -35,6 +38,7 @@ The MVP demonstrates three core modules:
 - **Language:** TypeScript
 - **UI Library:** React 18
 - **Styling:** Tailwind CSS v3
+- **Animations:** Framer Motion
 
 ---
 
@@ -48,19 +52,23 @@ xbanker.ai/
 │   │   ├── config.py            # Configuration management
 │   │   ├── database.py          # Database setup
 │   │   ├── models/              # SQLAlchemy models
-│   │   │   ├── client.py
-│   │   │   └── risk_alert.py
+│   │   │   ├── client.py        # Client with status & review tracking
+│   │   │   ├── risk_alert.py    # Alerts with SLA & priority
+│   │   │   ├── case.py          # Compliance cases & SAR tracking
+│   │   │   └── kyc_record.py    # Historical KYC versions
 │   │   ├── schemas/             # Pydantic schemas
 │   │   │   ├── client.py
 │   │   │   ├── risk.py
 │   │   │   └── insights.py
 │   │   ├── api/                 # API endpoints
-│   │   │   ├── kyc.py
-│   │   │   ├── risk.py
-│   │   │   ├── clients.py
-│   │   │   └── dashboard.py
+│   │   │   ├── kyc.py           # KYC analysis & history
+│   │   │   ├── risk.py          # Risk surveillance
+│   │   │   ├── clients.py       # Client management
+│   │   │   ├── cases.py         # Case & alert queue
+│   │   │   ├── dashboard.py     # Dashboard metrics
+│   │   │   └── agents.py        # Multi-agent workflows
 │   │   └── services/
-│   │       └── llm_service.py   # OpenAI integration
+│   │       └── ai_analysis_service.py  # Unified AI engine
 │   ├── requirements.txt
 │   └── .env.example
 │
@@ -70,10 +78,13 @@ xbanker.ai/
     │   ├── page.tsx             # Dashboard
     │   ├── kyc/page.tsx         # KYC Workflows
     │   ├── risk/page.tsx        # Risk Surveillance
-    │   └── clients/[id]/page.tsx # Client Detail
+    │   ├── cases/page.tsx       # Cases & Alerts
+    │   ├── agents/page.tsx      # AI Agent Orchestration
+    │   └── clients/[id]/page.tsx # Client Detail (tabbed)
     ├── components/
+    │   ├── AIAnalysisPanel.tsx  # Unified analysis interface
+    │   ├── CaseCard.tsx         # Case display component
     │   ├── Navigation.tsx
-    │   ├── StatCard.tsx
     │   └── ui/
     │       ├── Badge.tsx
     │       └── Card.tsx

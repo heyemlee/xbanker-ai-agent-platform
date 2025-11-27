@@ -5,15 +5,16 @@ import { AlertTriangle, Briefcase, Clock, Users, Search, Plus } from 'lucide-rea
 import PageHeader from '@/components/PageHeader';
 import Card from '@/components/ui/Card';
 import Badge from '@/components/ui/Badge';
+import CaseCard from '@/components/CaseCard';
 import { apiClient } from '@/lib/api';
-import { RiskAlert, Case } from '@/types';
+import { RiskAlertListItem, Case } from '@/types';
 import { cn } from '@/lib/utils';
 
 type TabType = 'alerts' | 'cases';
 
 export default function CasesPage() {
     const [activeTab, setActiveTab] = useState<TabType>('alerts');
-    const [openAlerts, setOpenAlerts] = useState<RiskAlert[]>([]);
+    const [openAlerts, setOpenAlerts] = useState<RiskAlertListItem[]>([]);
     const [cases, setCases] = useState<Case[]>([]);
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
@@ -53,7 +54,7 @@ export default function CasesPage() {
         return 'text-slate-500';
     };
 
-    const getSLAStatus = (alert: RiskAlert) => {
+    const getSLAStatus = (alert: RiskAlertListItem) => {
         if (!alert.sla_due_date) return null;
 
         const now = new Date();
@@ -239,51 +240,7 @@ export default function CasesPage() {
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {filteredCases.map((caseItem) => (
-                                <Card key={caseItem.id} className="hover:shadow-md transition-shadow">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <div>
-                                            <h3 className="font-bold text-slate-900">Case #{caseItem.id.toString().padStart(6, '0')}</h3>
-                                            <p className="text-sm text-slate-500 mt-1">{caseItem.case_type}</p>
-                                        </div>
-                                        <Badge variant={getSeverityVariant(caseItem.priority)}>
-                                            {caseItem.priority}
-                                        </Badge>
-                                    </div>
-
-                                    <div className="space-y-3 mb-4">
-                                        <div className="flex items-center gap-2 text-sm">
-                                            <Users size={14} className="text-slate-400" />
-                                            <span className="text-slate-700">{caseItem.client_name || 'Not assigned'}</span>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-sm">
-                                            <Clock size={14} className="text-slate-400" />
-                                            <span className="text-slate-500">
-                                                Created {new Date(caseItem.created_at).toLocaleDateString()}
-                                            </span>
-                                        </div>
-                                    </div>
-
-                                    {caseItem.investigation_notes && (
-                                        <p className="text-sm text-slate-600 mb-4 line-clamp-3">
-                                            {caseItem.investigation_notes}
-                                        </p>
-                                    )}
-
-                                    {caseItem.sar_status && (
-                                        <div className="pt-4 border-t border-slate-100">
-                                            <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">SAR Status</p>
-                                            <Badge variant={caseItem.sar_status === 'Filed' ? 'success' : 'neutral'}>
-                                                {caseItem.sar_status}
-                                            </Badge>
-                                        </div>
-                                    )}
-
-                                    <div className="mt-4 pt-4 border-t border-slate-100">
-                                        <button className="text-brand hover:text-brand-dark font-medium text-sm">
-                                            View Details →
-                                        </button>
-                                    </div>
-                                </Card>
+                                <CaseCard key={caseItem.id} caseItem={caseItem} />
                             ))}
                         </div>
                     )}

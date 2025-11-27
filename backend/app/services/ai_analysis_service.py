@@ -8,8 +8,10 @@ import json
 from typing import Dict, Any, Optional, Literal
 from openai import OpenAI
 
+from ..config import settings
+
 # Initialize OpenAI client
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 TemplateType = Literal["KYC_ANALYSIS", "RISK_SURVEILLANCE"]
 
@@ -117,7 +119,7 @@ Respond ONLY with the JSON object, no additional text."""
             
             # Call OpenAI API
             response = client.chat.completions.create(
-                model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+                model=settings.OPENAI_MODEL,
                 messages=[
                     {
                         "role": "system",
@@ -167,7 +169,7 @@ Respond ONLY with the JSON object, no additional text."""
             
             # Call OpenAI API
             response = client.chat.completions.create(
-                model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+                model=settings.OPENAI_MODEL,
                 messages=[
                     {
                         "role": "system",

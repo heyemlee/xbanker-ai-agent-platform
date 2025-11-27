@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     
     # OpenAI Configuration
     OPENAI_API_KEY: str = ""
-    OPENAI_MODEL: str = "gpt-4"
+    OPENAI_MODEL: str = "gpt-4o"
     
     # Database Configuration
     DATABASE_URL: str = "sqlite:///./xbanker.db"

@@ -33,6 +33,10 @@ class ClientResponse(ClientBase):
     risk_rationale: Optional[str] = None
     kyc_summary: Optional[str] = None
     raw_kyc_notes: Optional[str] = None
+    # Enhanced KYC fields
+    cdd_conclusion: Optional[str] = None
+    edd_required: Optional[bool] = None
+    next_review_date: Optional[date] = None
     created_at: datetime
     updated_at: datetime
     

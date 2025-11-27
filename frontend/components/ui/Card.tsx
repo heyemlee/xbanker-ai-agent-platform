@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils';
 import { ReactNode } from 'react';
 
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     children: ReactNode;
     className?: string;
     title?: string;
@@ -9,12 +9,15 @@ interface CardProps {
     noPadding?: boolean;
 }
 
-export default function Card({ children, className, title, action, noPadding = false }: CardProps) {
+export default function Card({ children, className, title, action, noPadding = false, ...props }: CardProps) {
     return (
-        <div className={cn(
-            "bg-white rounded-xl shadow-card border border-slate-100 overflow-hidden transition-all duration-200 hover:shadow-float",
-            className
-        )}>
+        <div
+            className={cn(
+                "bg-white rounded-xl shadow-card border border-slate-100 overflow-hidden transition-all duration-200 hover:shadow-float",
+                className
+            )}
+            {...props}
+        >
             {title && (
                 <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
                     <h3 className="text-base font-semibold text-slate-800">{title}</h3>

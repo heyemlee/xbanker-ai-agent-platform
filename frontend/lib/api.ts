@@ -7,6 +7,7 @@ import {
     RiskAlertListResponse,
     RiskAnalysisRequest,
     ClientInsights,
+    RiskAlertListItem,
     DashboardStats,
     Case,
     CaseCreate,
@@ -131,14 +132,14 @@ class APIClient {
         priority?: string;
         severity?: string;
         assigned_to?: string;
-    }): Promise<RiskAlert[]> {
+    }): Promise<RiskAlertListItem[]> {
         const params = new URLSearchParams();
         if (filters?.priority) params.append('priority', filters.priority);
         if (filters?.severity) params.append('severity', filters.severity);
         if (filters?.assigned_to) params.append('assigned_to', filters.assigned_to);
 
         const query = params.toString() ? `?${params.toString()}` : '';
-        return this.request<RiskAlert[]>(`/api/alerts/open${query}`);
+        return this.request<RiskAlertListItem[]>(`/api/alerts/open${query}`);
     }
 
     // Dashboard Endpoints

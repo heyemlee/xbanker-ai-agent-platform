@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import Optional
+from typing import Optional, List, Dict, Any
 
 from ..database import get_db
 from ..models.client import Client
@@ -11,7 +11,7 @@ from ..schemas.risk import (
     RiskAlertListResponse,
     RiskAlertListItem
 )
-from ..services.llm_service import llm_service
+from ..services.ai_analysis_service import AIAnalysisService
 
 router = APIRouter(prefix="/api/risk", tags=["Risk Surveillance"])
 
@@ -22,7 +22,7 @@ async def analyze_risk(
     db: Session = Depends(get_db)
 ):
     """
-    Analyze activity logs for risk signals using AI
+    Analyze activity logs for risk signals using AI and create risk alert
     """
     # Get client name if client_id provided
     client_name = None
@@ -32,19 +32,28 @@ async def analyze_risk(
             raise HTTPException(status_code=404, detail="Client not found")
         client_name = client.full_name
     
-    # Call LLM service to analyze risk
-    risk_analysis = llm_service.analyze_risk(
-        activity_log=request.activity_log,
-        client_name=client_name
+    # Prepare context for AI
+    context = {
+        "activity_log": request.activity_log,
+        "client_name": client_name
+    }
+    
+    # Call Unified AI Service
+    analysis_result = await AIAnalysisService.analyze(
+        context=context,
+        template_type="RISK_SURVEILLANCE",
+        client_id=request.client_id
     )
     
     # Create risk alert record
     alert = RiskAlert(
         client_id=request.client_id,
-        severity=risk_analysis.get("severity", "Medium"),
-        risk_tags=risk_analysis.get("risk_tags", []),
-        summary=risk_analysis.get("summary", ""),
-        next_steps=risk_analysis.get("next_steps", ""),
+        severity=analysis_result.get("severity", "Medium"),
+        risk_tags=analysis_result.get("risk_tags", []),
+        summary=analysis_result.get("summary", ""),
+        next_steps=analysis_result.get("next_steps", ""),
+        priority=analysis_result.get("priority", "Medium"),
+        status="Open",
         raw_activity_log=request.activity_log
     )
     
