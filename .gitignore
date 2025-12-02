@@ -41,4 +41,7 @@ yarn-error.log*
 # Build
 dist/
 build/
+
+# Interview preparation materials (private)
 DEMO_SCRIPT.md
+demo_system/docs/

@@ -12,7 +12,7 @@ from ..database import get_db
 from ..models import Case, RiskAlert, Client
 from pydantic import BaseModel
 
-router = APIRouter()
+router = APIRouter(prefix="/api", tags=["cases", "alerts"])
 
 
 # Pydantic Schemas
