@@ -75,11 +75,8 @@ export default function HomePage() {
                 description="Overview of your compliance and risk landscape."
                 action={
                     <div className="flex gap-3">
-                        <Link href="/kyc" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white bg-white text-slate-900 hover:bg-slate-100 h-9 px-4 py-2 border border-slate-200 shadow-sm">
-                            New KYC
-                        </Link>
-                        <Link href="/risk" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white bg-brand text-white hover:bg-brand-dark h-9 px-4 py-2 shadow-sm">
-                            Analyze Risk
+                        <Link href="/agents" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white bg-brand text-white hover:bg-brand-dark h-9 px-4 py-2 shadow-sm">
+                            Run AI Analysis
                         </Link>
                     </div>
                 }
@@ -218,7 +215,7 @@ export default function HomePage() {
                             )}
                         </div>
                         <div className="p-4 border-t border-slate-100 bg-slate-50">
-                            <Link href="/kyc" className="text-sm font-medium text-brand hover:text-brand-dark flex items-center justify-center">
+                            <Link href="/clients" className="text-sm font-medium text-brand hover:text-brand-dark flex items-center justify-center">
                                 View All Clients
                             </Link>
                         </div>

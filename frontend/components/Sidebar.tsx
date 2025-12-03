@@ -8,11 +8,9 @@ import { cn } from '@/lib/utils';
 
 const navItems = [
     { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/kyc', label: 'KYC Workflows', icon: FileText },
-    { href: '/risk', label: 'Risk Surveillance', icon: ShieldAlert },
+    { href: '/agents', label: 'AI Agent Suite', icon: Brain },
     { href: '/cases', label: 'Cases / Alerts', icon: Briefcase },
     { href: '/clients', label: 'Clients', icon: Users },
-    { href: '/agents', label: 'AI Agents', icon: Brain },
 ];
 
 export default function Sidebar() {
@@ -37,7 +35,7 @@ export default function Sidebar() {
 
 
             {/* Navigation */}
-            <nav className="flex-1 px-3 py-6 space-y-1">
+            <nav className="flex-1 px-3 py-6 space-y-1 flex flex-col">
                 {navItems.map((item) => {
                     const Icon = item.icon;
                     const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
@@ -58,20 +56,23 @@ export default function Sidebar() {
                         </Link>
                     );
                 })}
+
+                <div className="mt-auto pt-4">
+                    <Link
+                        href="/settings"
+                        className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md hover:bg-slate-100 transition-colors"
+                    >
+                        <Settings size={18} className="text-slate-400" />
+                        Settings
+                    </Link>
+                </div>
             </nav>
 
             {/* Footer */}
             <div className="p-4 border-t border-slate-200">
                 <Link
-                    href="/settings"
-                    className="flex items-center gap-3 px-3 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 rounded-md w-full hover:bg-slate-100 transition-colors"
-                >
-                    <Settings size={18} className="text-slate-400" />
-                    Settings
-                </Link>
-                <Link
                     href="/profile"
-                    className="mt-4 flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-100 transition-colors group"
+                    className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-slate-100 transition-colors group"
                 >
                     <div className="w-8 h-8 rounded-full bg-brand-subtle flex items-center justify-center text-brand font-medium text-xs group-hover:ring-2 group-hover:ring-brand/20 transition-all">
                         JD

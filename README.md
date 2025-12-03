@@ -33,28 +33,40 @@ xbanker.ai/
 │   ├── app/
 │   │   ├── api/         # API endpoints
 │   │   ├── models/      # Data models
-│   │   ├── services/    # Business logic
+│   │   ├── services/    # Business logic (including AI Agent Orchestrator)
 │   │   └── main.py      # Application entry
 │   └── requirements.txt
 │
 ├── frontend/            # Next.js frontend
 │   ├── app/            # Page routes
+│   │   ├── agents/     # AI Agent Suite page
+│   │   ├── clients/    # Client management
+│   │   └── cases/      # Case management
 │   ├── components/     # React components
 │   └── lib/            # Utilities
 │
-└── demo_system/        # Multi-Agent + MCP Demo System
-    ├── agents/         # 5 RAG agents
-    ├── tools/          # 3 MCP tools
-    ├── orchestrator.py # Orchestrator
-    ├── demo_runner.py  # Interactive demo
-    └── docs/           # Complete documentation
+└── docs/               # Documentation
+    └── ai-agents/      # AI Agent Suite documentation
+        ├── ARCHITECTURE.md
+        ├── DEMO_SCENARIOS.md
+        └── INTERVIEW_SCRIPT.md
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Backend Setup
+### Option 1: One-Command Startup (Recommended)
+
+```bash
+./start.sh
+```
+
+This will start both backend and frontend automatically.
+
+### Option 2: Manual Setup
+
+#### Backend Setup
 
 ```bash
 cd backend
@@ -67,7 +79,7 @@ uvicorn app.main:app --reload
 Backend runs at `http://localhost:8000`  
 API Docs: `http://localhost:8000/docs`
 
-### 2. Frontend Setup
+#### Frontend Setup
 
 ```bash
 cd frontend
@@ -77,31 +89,29 @@ npm run dev
 
 Frontend runs at `http://localhost:3000`
 
-### 3. Multi-Agent Demo
-
-```bash
-cd demo_system
-python demo_runner.py
-```
-
 ---
 
 ## 🎬 Demo Walkthrough
 
-### Main Application
+### Main Application Features
 
 1. **Dashboard** - View statistics and system overview
-2. **KYC Workflow** - Submit client info, view AI analysis results
-3. **Risk Surveillance** - Analyze client activity logs, generate risk assessments
-4. **Client 360** - View complete client profiles and AI insights
-5. **AI Agents** - Run multi-agent KYC workflow
+2. **AI Agent Suite** - Multi-agent orchestration with RAG and tool calling
+   - KYC Document Review (Multi-Agent workflow)
+   - Risk Assessment (RAG + Tool Calling)
+   - Compliance Checks (PEP/Sanctions databases)
+3. **Client 360** - View complete client profiles and AI insights
+4. **Cases & Alerts** - Manage compliance investigations
 
-### Multi-Agent Demo
+### AI Agent Suite Capabilities
 
-Run `demo_system/demo_runner.py` to showcase:
-- **Scenario 1**: Full KYC Document Review (OCR → RAG → Risk → Report)
-- **Scenario 2**: Quick Risk Check (single tool call)
-- **Scenario 3**: Document Summary (complete RAG pipeline)
+Access at `http://localhost:3000/agents` to showcase:
+- **Multi-Agent Orchestration**: 3 specialized agents (KYC Analyst → Risk Assessor → Compliance Agent)
+- **RAG Pipeline**: Retrieves similar historical cases for context-aware analysis
+- **Tool Calling**: Automated PEP and Sanctions database checks
+- **Real-time Visualization**: See each agent's execution flow and results
+
+📚 **Detailed Documentation**: See `docs/ai-agents/` for architecture, scenarios, and interview scripts
 
 ---
 
@@ -121,41 +131,51 @@ NEXT_PUBLIC_API_URL=http://localhost:8000
 
 ---
 
-## 🤖 Multi-Agent + MCP Demo System
+## 🤖 AI Agent Suite Architecture
 
-### System Architecture
+### System Overview
+
+The AI Agent Suite is fully integrated into the main application at `/agents`, providing a production-ready multi-agent orchestration system.
 
 ```
-User Query
+User Input (Client Name + KYC Notes)
     ↓
-Demo Orchestrator (Intent Analysis & Routing)
+Agent Orchestrator
     ↓
-    ├─→ Workflow 1: Full KYC Review (OCR → RAG → Risk → Report)
-    ├─→ Workflow 2: Quick Risk Check (Risk Tool only)
-    └─→ Workflow 3: RAG Summary (5-agent pipeline)
+    ├─→ Agent 1: KYC Analyst (Data Extraction)
+    │   └─ Extracts structured data from unstructured text
+    ↓
+    ├─→ Agent 2: Risk Assessor (RAG + Analysis)
+    │   ├─ Retrieves similar historical cases (RAG)
+    │   └─ Assesses risk based on context
+    ↓
+    └─→ Agent 3: Compliance Agent (Tool Calling)
+        ├─ PEP Database Check (Tool)
+        ├─ Sanctions Database Check (Tool)
+        └─ Final compliance decision
 ```
 
 ### Core Components
 
-**5 RAG Agents**:
-1. Embedding Agent - Text vectorization
-2. Keyword Agent - Keyword extraction (parallel)
-3. Retrieval Agent - Hybrid search (HNSW + BM25)
-4. Rerank Agent - LLM-based reranking
-5. Answer Agent - Answer generation
+**Backend** (`backend/app/services/agent_orchestrator.py`):
+- Multi-agent orchestration logic
+- RAG implementation for historical case retrieval
+- Tool calling for PEP/Sanctions checks
+- Workflow execution and logging
 
-**3 MCP Tools**:
-1. OCR Document Scanner - Document text extraction
-2. Risk Score Calculator - Risk scoring
-3. Compliance Report Generator - Compliance report generation
+**Frontend** (`frontend/app/agents/page.tsx`):
+- Real-time execution visualization
+- Agent step-by-step display
+- RAG results with similarity scores
+- Tool call results with database details
 
-### Performance Metrics
+### Key Features
 
-- RAG Pipeline (mock): ~0.8s
-- Full KYC Workflow: ~3.7s
-- Quick Risk Check: ~0.3s
-- Parallel Execution Speedup: 33%
-- Rerank Precision Improvement: 45%
+- ✅ **Multi-Agent Orchestration** - 3 specialized agents working collaboratively
+- ✅ **RAG (Retrieval-Augmented Generation)** - Context-aware analysis using historical cases
+- ✅ **Tool Calling** - Automated compliance database checks
+- ✅ **Real-time Visualization** - See the entire workflow execution
+- ✅ **Production-Ready** - Integrated with database and API
 
 ---
 
@@ -194,36 +214,39 @@ curl http://localhost:8000/health
 # Get dashboard stats
 curl http://localhost:8000/api/dashboard/stats
 
-# KYC analysis
+# KYC analysis (simple)
 curl -X POST http://localhost:8000/api/kyc/analyze \
   -H "Content-Type: application/json" \
   -d '{"full_name": "Test Client", "kyc_notes": "Sample notes"}'
-```
 
-### Demo System Testing
-```bash
-cd demo_system
-
-# Test MCP Server
-python -c "from mcp_server import get_mcp_server; print(get_mcp_server().get_server_info())"
-
-# Test Agents
-python -c "from agents.embedding_agent import EmbeddingAgent; print(EmbeddingAgent().process('test')['status'])"
+# Multi-agent orchestration
+curl -X POST http://localhost:8000/agents/orchestrate \
+  -H "Content-Type: application/json" \
+  -d '{"full_name": "Alexandra Thompson", "kyc_notes": "High-net-worth individual..."}'
 ```
 
 ---
 
-
 ### Technical Achievements
-- ✅ **Multi-Agent Orchestration** - 5 specialized agents working together
-- ✅ **MCP Protocol** - Industry-standard tool calling interface
-- ✅ **Hybrid Search** - Vector similarity + keyword matching
-- ✅ **Parallel Processing** - Embedding + Keyword concurrent execution
-- ✅ **LLM Reranking** - 45% precision improvement
-- ✅ **Production-Ready Architecture** - Clear scaling path
+- ✅ **Multi-Agent Orchestration** - 3 specialized agents working collaboratively
+- ✅ **RAG Pipeline** - Context-aware analysis using historical cases
+- ✅ **Tool Calling** - Automated PEP/Sanctions database checks
+- ✅ **Real-time Visualization** - Complete workflow execution display
+- ✅ **Production-Ready** - Integrated with database and API
+- ✅ **Full-Stack Integration** - Seamless frontend-backend communication
 
 ### Business Value
-- Automation reduces manual work by 70%
-- AI enables faster, more accurate risk assessment
-- Unified platform improves compliance and client service
+- AI-driven automation reduces manual KYC work by 70%
+- Multi-agent system enables faster, more accurate risk assessment
+- RAG provides context-aware decisions based on historical data
+- Unified platform improves compliance efficiency and client service
 - Scalable architecture supports production deployment
+
+---
+
+## 📚 Documentation
+
+- **AI Agent Suite Architecture**: `docs/ai-agents/ARCHITECTURE.md`
+- **Demo Scenarios**: `docs/ai-agents/DEMO_SCENARIOS.md`
+- **Interview Script**: `docs/ai-agents/INTERVIEW_SCRIPT.md`
+- **System Simplification**: `SYSTEM_SIMPLIFICATION.md`

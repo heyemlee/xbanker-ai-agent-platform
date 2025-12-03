@@ -360,11 +360,11 @@ export default function AgentsPage() {
     return (
         <div className="space-y-8 animate-in fade-in duration-500">
             <PageHeader
-                title="AI Agent Orchestration"
-                description="Multi-agent workflow with RAG and tool calling capabilities."
+                title="AI Agent Suite"
+                description="Multi-agent orchestration with RAG, tool calling, and intelligent workflow automation for KYC and risk analysis."
             />
 
-            <Card title="Test Agent Workflow">
+            <Card title="Multi-Agent Analysis">
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
                         <div className="md:col-span-8">
