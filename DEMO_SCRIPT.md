@@ -1,56 +1,91 @@
-# xBanker AI Agent Suite - Interview Demo Presentation
+# xBanker AI Agent Suite - 面试演示脚本
 
-**Candidate Background Context:**  
-This demo showcases my understanding of the company's business needs and my ability to rapidly prototype production-ready solutions. I built this MVP to demonstrate my full-stack capabilities and domain expertise in financial technology.
-
----
-
-## INTRODUCTION (30 seconds)
-
-**"Thank you for this opportunity. I understand that [Company Name] is developing an AI-powered compliance platform for private banks. To demonstrate my fit for this role, I built a working MVP of what I believe this product could look like."**
-
-**"This is xBanker AI Agent Suite - an intelligent automation platform for KYC, risk surveillance, and client insights. I'll walk you through the key features in the next 10 minutes."**
+> **演示时长：10-12分钟**  
+> **目标：展示 Multi-Agent 架构、RAG、Tool Calling 的完整实现**
 
 ---
 
-## DASHBOARD OVERVIEW (1 minute)
+## 🎯 开场白 (30秒)
 
-**Navigate to:** `http://localhost:3000`
+**"感谢给我这次机会。我了解到贵公司正在开发 AI Agent 平台，所以我构建了这个 xBanker AI Agent Suite 来展示我对 Multi-Agent 系统、RAG 和 Tool Calling 的理解。"**
 
-**"Starting with the dashboard - I designed this with a Stripe-inspired aesthetic because financial platforms need to convey trust and professionalism."**
-
-### Key Points:
-- **KPI Cards:** "These four metrics give compliance officers real-time visibility: Total Clients, High Risk Clients, Open Alerts, and KYC Analyses. Each includes a sparkline showing trends."
-  
-- **Alert Feed:** "Below is the risk alert feed with color-coded severity levels - green for low, yellow for medium, red for high."
-
-- **Navigation:** "The sidebar provides quick access to all modules, and the search bar enables instant lookup across the platform."
+**"这是一个完整的金融合规自动化平台，核心是 AI Agent Suite - 一个生产级的多智能体协同系统。接下来 10 分钟，我将演示它的核心功能。"**
 
 ---
 
-## KYC WORKFLOW AUTOMATION (3 minutes)
+## 📊 Dashboard 概览 (1分钟)
 
-**Navigate to:** `/kyc`
+**导航到：** `http://localhost:3000`
 
-**"This is the KYC Workflow module. Traditional KYC takes 3-5 days. With AI automation, it takes minutes."**
+### 演示要点：
 
-### Demonstrate Modern UI Components:
+**"首先看 Dashboard，这里展示了系统的整体状况："**
 
-**"I've implemented modern form components:"**
-- **Date Picker:** "Calendar interface with year/month dropdowns"
-- **Country Selectors:** "Searchable dropdowns with flag emojis - much faster than typing"
+1. **KPI 卡片**
+   - "4个核心指标：总客户数、高风险客户、开放案例、新告警"
+   - "每个都有趋势指示器"
 
-### Fill Out Sample Data:
+2. **快速操作**
+   - **点击 "Run AI Analysis" 按钮**
+   - "这个按钮直接进入 AI Agent Suite - 今天演示的重点"
+
+3. **导航栏**
+   - "左侧导航已经简化，突出核心功能"
+   - "AI Agent Suite 是第二个选项，说明它的重要性"
+
+---
+
+## 🤖 AI Agent Suite - 核心演示 (7分钟)
+
+**导航到：** `/agents`
+
+**"这是整个系统的核心 - AI Agent Suite。让我先解释架构，然后做实时演示。"**
+
+### Part 1: 架构讲解 (1分钟)
+
+**"系统采用 Multi-Agent 架构，3个专业 Agent 协同工作："**
 
 ```
-Full Name: Alexandra Thompson
-Date of Birth: 1978-05-20
-Nationality: United Kingdom
-Residency: Monaco
-Source of Wealth: Technology investments and consulting
-Business Activity: Private equity investor
+用户输入 (客户名称 + KYC 文档)
+    ↓
+Agent Orchestrator (协调器)
+    ↓
+┌─────────────────────────────────────┐
+│ Agent 1: KYC Analyst                │
+│ - 从非结构化文本提取结构化数据      │
+│ - 识别财富来源、业务活动、司法管辖区│
+└─────────────────────────────────────┘
+    ↓
+┌─────────────────────────────────────┐
+│ Agent 2: Risk Assessor (RAG)        │
+│ - 检索相似历史案例                  │
+│ - 基于上下文评估风险                │
+│ - 使用 RAG 提供智能决策             │
+└─────────────────────────────────────┘
+    ↓
+┌─────────────────────────────────────┐
+│ Agent 3: Compliance Agent (Tools)   │
+│ - 调用 PEP 数据库检查工具           │
+│ - 调用制裁名单检查工具              │
+│ - 综合所有信息做最终决策            │
+└─────────────────────────────────────┘
+    ↓
+最终决策 + 完整审计追踪
+```
 
-KYC Notes:
+**技术亮点：**
+- "这不是简单的 API 链式调用，而是真正的 Agent 协同"
+- "每个 Agent 都有专门的职责和决策能力"
+- "数据在 Agent 之间流转，逐步丰富"
+
+### Part 2: 实时演示 (5分钟)
+
+#### 输入示例数据：
+
+```
+客户名称: Alexandra Thompson
+
+KYC 文档:
 Client is a high-net-worth individual with diversified investment portfolio. 
 Primary wealth generated from founding and selling two SaaS companies between 
 2005-2018. Currently holds board positions in three technology startups based 
@@ -61,336 +96,337 @@ through tax returns and sale agreements. Some exposure to emerging markets throu
 portfolio companies in Southeast Asia.
 ```
 
-### Click "Run AI Analysis"
+**"我输入了一个高净值客户的 KYC 文档，包含非结构化的文本信息。"**
 
-**"When I click 'Run AI Analysis':"**
+#### 点击 "Run Workflow"
 
-1. **"The frontend sends a request to the FastAPI backend"**
-2. **"The backend constructs a structured prompt for GPT-4"**
-3. **"The AI analyzes the KYC notes and returns:"**
-   - Risk score (Low/Medium/High)
-   - PEP and sanctions flags
-   - Risk rationale with explanation
-   - Executive summary
-
-**"Within 2-3 seconds, we get comprehensive analysis with full audit trail."**
-
-### Point to Results:
-- **"Risk Score based on profile analysis"**
-- **"Compliance flags for PEP and sanctions"**
-- **"Risk rationale explaining the assessment"**
-- **"KYC summary for quick review"**
-
-**Technical Highlight:**  
-**"Notice the split-view layout - form on left, results on right. This provides immediate feedback without page refreshes, following modern fintech UX patterns."**
+**"点击运行后，观察整个执行流程："**
 
 ---
 
-## RISK SURVEILLANCE (2 minutes)
+### 🎯 Agent 1: KYC Analyst - 数据提取
 
-**Navigate to:** `/risk`
+**"首先，KYC Analyst Agent 开始工作："**
 
-**"Once clients are onboarded, we need continuous monitoring. This is the Risk Surveillance module."**
-
-### Select Client:
-**"I'll select Alexandra Thompson, the client we just created."**
-
-### Paste Sample Activity Log:
+**指向屏幕上的执行步骤：**
 
 ```
-Client opened three new accounts in Singapore and Hong Kong, China in the past 14 days. 
-Unusual transaction pattern detected: 12 wire transfers totaling USD 2.3M sent to 
-newly established entities in British Virgin Islands. Transactions flagged as 
-outside normal pattern—client typically maintains 3-4 transactions per month 
-averaging USD 150K. Recent news article mentions client's former business partner 
-is under investigation by UK tax authorities for offshore tax evasion scheme. 
-Client has not responded to routine compliance questionnaire sent 30 days ago.
+🤖 Step 1: KYC Analyst Agent
+    agent: KYC Analyst Agent
+    role: Data Extraction Specialist
+    execution_time: 1.2s
 ```
 
-### Click "Analyze Risk"
+**"这个 Agent 从非结构化文本中提取了："**
+- ✅ 财富来源：Technology investments, Business sale proceeds
+- ✅ 业务活动：Private equity, Board positions
+- ✅ 司法管辖区：UK, Monaco, Switzerland, Southeast Asia
+- ✅ 风险标记：已识别或清除
 
-**"The AI identifies:"**
-- **Severity Level:** "High"
-- **Risk Categories:** "Jurisdiction risk, transaction anomaly, association risk"
-- **Summary:** "Concise explanation of findings"
-- **Recommended Actions:** "Next steps like enhanced due diligence"
-
-**"The alert immediately appears in the feed, creating an audit trail."**
-
-**Business Value:**  
-**"Traditional risk monitoring is manual and slow. This AI-powered approach processes thousands of data points in seconds and flags anomalies that humans might miss."**
+**技术要点：**
+- "使用 GPT-4o 和专门设计的提示词"
+- "不是简单的关键词匹配，而是理解上下文"
+- "返回结构化的 JSON 数据"
 
 ---
 
-## CLIENT 360 INSIGHTS (2 minutes)
+### 🔍 Agent 2: Risk Assessor - RAG 分析
 
-**Navigate to:** `/clients/{id}`
+**"接下来是 Risk Assessor，这里展示了 RAG 的威力："**
 
-**"This is the Client 360 view - a comprehensive profile for relationship managers."**
+**指向 RAG 检索结果卡片：**
 
-### Point to Layout:
-- **Left:** "Client profile and risk assessment"
-- **Right:** "AI-powered insights panel"
+```
+🔍 RAG - Retrieved Historical Cases
 
-### Click "Generate Insights"
+Case 1: Marcus Chen (89% 相似度)
+- Tech entrepreneur, multiple jurisdictions
+- Risk Level: Low
+- Outcome: Approved
 
-**"The AI aggregates KYC data, risk alerts, and activity patterns to produce:"**
+Case 2: Isabella Fontaine (82% 相似度)
+- Private equity investor, Monaco residency
+- Risk Level: Medium
+- Outcome: Approved with monitoring
 
-1. **Profile Overview:** "Key facts about the client"
-2. **Risk & Compliance View:** "Current compliance posture"
-3. **Suggested RM Actions:** "Specific steps to take"
-4. **Next Best Actions:** "Prioritized to-do list"
+Case 3: Thomas Albright (76% 相似度)
+- International business owner
+- Risk Level: Low
+- Outcome: Approved
+```
 
-**"This isn't just data aggregation - it's intelligent synthesis that would normally require senior compliance expertise."**
+**"这就是 RAG - Retrieval-Augmented Generation："**
+
+1. **检索阶段**
+   - "系统从历史案例数据库中检索了 3 个最相似的案例"
+   - "相似度分数显示匹配程度（89%, 82%, 76%）"
+   - "每个案例都有完整的背景信息"
+
+2. **增强阶段**
+   - "这些历史案例作为上下文提供给 AI"
+   - "AI 基于这些先例做出更智能的决策"
+   - "不是孤立判断，而是基于历史经验"
+
+**技术实现：**
+- "生产环境会使用向量数据库（如 Qdrant）"
+- "Embedding 模型计算语义相似度"
+- "Top-K 检索 + 相关性排序"
 
 ---
 
-## AI AGENT ORCHESTRATION (3 minutes) ⭐ KEY DIFFERENTIATOR
+### 🔧 Agent 3: Compliance Agent - Tool Calling
 
-**Navigate to:** `/agents`
+**"最后，Compliance Agent 调用外部工具进行合规检查："**
 
-**"Now let me show you something that directly addresses your job requirements - a multi-agent orchestration system."**
+**指向 Tool Calls 结果：**
 
-### Explain the Architecture:
+#### Tool 1: PEP Database Check
 
-**"Instead of using a single monolithic AI call, I've designed a workflow with three specialized agents:"**
-
-1. **KYC Analyst Agent** - "Extracts structured data from unstructured KYC notes"
-2. **Risk Assessor Agent** - "Uses RAG to retrieve similar historical cases and assess risk"
-3. **Compliance Agent** - "Calls tools to check PEP and sanctions databases"
-
-**"Each agent has a specialized prompt optimized for its specific task. This modular approach is:**
-- ✅ **Scalable** - Add new agents without rewriting the system
-- ✅ **Testable** - Evaluate each agent independently
-- ✅ **Debuggable** - See exactly where issues occur
-- ✅ **Production-ready** - This is how real agent platforms work"
-
-### Demonstrate the Workflow:
-
-**Fill in the form with:**
 ```
-Client Name: Alexandra Thompson
-KYC Notes: [Use the same KYC notes from earlier]
+🔧 Tool Calls - External API Integration
+
+Tool: PEP Database Check
+Status: ✓ Clear
+Confidence: 99.8%
+
+Databases Searched:
+├─ World-Check PEP Database (Refinitiv)
+│  └─ 2,847,193 records searched → No Match
+├─ Dow Jones PEP List
+│  └─ 1,923,847 records searched → No Match
+└─ ComplyAdvantage Database
+   └─ 3,192,841 records searched → No Match
+
+Search Parameters:
+- Name: Alexandra Thompson
+- Fuzzy Match: Enabled (85% threshold)
+- Aliases + Family Members: Checked
 ```
 
-**Click "Run Multi-Agent Workflow"**
+**"看这个详细的 PEP 检查："**
+- "搜索了 3 个主要 PEP 数据库"
+- "总共检索了 800 万+ 记录"
+- "使用模糊匹配和别名检查"
+- "置信度 99.8%"
 
-### Point to Visual Execution:
+#### Tool 2: Sanctions Database Check
 
-**"Watch how the agents execute sequentially:"**
+```
+Tool: Sanctions Database Check
+Status: ✓ Clear
+Confidence: 99.7%
 
-1. **Agent 1 activates** - "KYC Analyst extracts wealth sources, jurisdictions, red flags"
-2. **Agent 2 activates** - "Risk Assessor retrieves 3 similar cases via RAG (notice the relevance scores)"
-3. **Agent 3 activates** - "Compliance Agent makes 2 tool calls: PEP check and Sanctions check"
+Databases Searched:
+├─ OFAC SDN List (US Treasury)
+│  └─ 12,847 entries → No Match
+├─ UN Consolidated Sanctions
+│  └─ 8,934 entries → No Match
+├─ EU Sanctions List
+│  └─ 6,723 entries → No Match
+└─ UK HMT Sanctions
+   └─ 4,521 entries → No Match
+```
 
-**"Each agent's execution is logged with:**
-- Input and output
-- Execution time
-- Tools used
-- RAG retrieval details"
+**"制裁名单检查同样详细："**
+- "覆盖 OFAC、UN、EU、UK 所有主要制裁名单"
+- "每个数据库的检查结果都透明展示"
+- "这就是 Tool Calling - Agent 自主调用工具并解释结果"
 
-### Highlight Key Features:
+---
 
-#### 1. Multi-Agent Orchestration,,
-**"This demonstrates coordinated agent workflows - exactly what you need for complex compliance processes."**
+### ✅ 最终决策仪表板
+
+**"所有 Agent 完成后，系统综合所有信息："**
+
+**指向最终结果面板：**
+
+```
+┌─────────────────────────────────────────────┐
+│  ✓ Approved                                 │
+│  Confidence Score: 98%                      │
+│  Level 1 (Automated)                        │
+└─────────────────────────────────────────────┘
+
+Risk Assessment:
+├─ Risk Score: 15/100 (Low)
+├─ Decision Breakdown:
+│  ├─ KYC Data: Pass
+│  ├─ RAG Check: Pass
+│  ├─ PEP Check: Pass
+│  └─ Sanctions Check: Pass
+
+Decision Rationale:
+"Client profile is consistent with low-risk parameters. 
+No negative news, PEP matches, or sanctions hits found. 
+Source of wealth is verified and transparent."
+
+Recommended Actions:
+✓ Approve account opening
+✓ Schedule standard annual review
+✓ Enable standard transaction limits
+```
+
+**"这个决策面板展示了："**
+- **最终状态**：Approved / Review Required / Rejected
+- **置信度**：98% - 系统对决策的信心
+- **风险评分**：15/100 - 可视化进度条
+- **决策细分**：每个检查项的结果
+- **决策理由**：完整的解释
+- **建议操作**：下一步行动
+
+---
+
+### 💡 技术亮点总结 (1分钟)
+
+**"让我总结一下刚才演示的技术要点："**
+
+#### 1. Multi-Agent Orchestration
+- ✅ 3个专业 Agent 协同工作
+- ✅ 每个 Agent 有独立的职责和决策能力
+- ✅ 数据在 Agent 之间流转和丰富
+- ✅ 不是简单的函数调用链，而是真正的协同
 
 #### 2. RAG (Retrieval-Augmented Generation)
-**"The Risk Assessor doesn't just analyze in isolation. It retrieves similar historical cases from a vector database (simulated here) and uses that context to make better decisions. This is long-context understanding in action."**
+- ✅ 从历史案例中检索相似案例
+- ✅ 使用语义相似度排序
+- ✅ 提供上下文增强的智能决策
+- ✅ 基于先例而非孤立判断
 
 #### 3. Tool Calling
-**"The Compliance Agent doesn't hallucinate PEP/sanctions status. It calls external tools (APIs) to get real data. This is the MCP (Model Context Protocol) pattern you're building."**
+- ✅ Agent 自主调用外部工具
+- ✅ 解释工具返回的结果
+- ✅ 集成多个数据库（PEP、Sanctions）
+- ✅ 完整的审计追踪
 
-### Technical Deep Dive (if asked):
-
-**"Under the hood:**
-- Each agent is a separate LLM call with specialized system prompts
-- The orchestrator manages state and passes data between agents
-- RAG uses embedding similarity (in production, this would be Pinecone or Weaviate)
-- Tool calls are structured function calls with validation
-- The entire workflow is async for performance"
-
-**"This architecture is production-ready. You can:**
-- Add new agents by implementing a simple interface
-- Swap LLM providers without changing orchestration logic
-- A/B test different agent prompts independently
-- Monitor each agent's performance separately"
+#### 4. 实时可视化
+- ✅ 每个步骤都可见
+- ✅ 完整的执行日志
+- ✅ 透明的 AI 决策过程
+- ✅ 符合合规要求的审计追踪
 
 ---
 
-## TECHNICAL IMPLEMENTATION (2 minutes)
+## 🏗️ 技术架构快速展示 (1分钟)
 
+**"让我快速展示一下技术栈："**
 
-### Backend:
-- **"FastAPI with async support for high performance"**
-- **"SQLAlchemy ORM - currently SQLite for demo, but PostgreSQL-ready"**
-- **"Pydantic for type-safe request/response validation"**
-- **"LLM service abstraction - can swap providers without changing business logic"**
+### 后端架构
+```
+backend/
+├── app/
+│   ├── api/
+│   │   └── agents.py              # API 端点
+│   ├── services/
+│   │   └── agent_orchestrator.py  # 核心：Multi-Agent 协调器
+│   └── models/                    # 数据模型
+```
 
-### Frontend:
-- **"Next.js 14 with App Router for optimal performance"**
-- **"TypeScript throughout for type safety"**
-- **"Tailwind CSS for rapid, consistent UI development"**
-- **"Modern components: React-Select, React-DatePicker"**
+**关键技术：**
+- FastAPI - 高性能异步 API
+- SQLAlchemy - ORM 数据库操作
+- OpenAI GPT-4o - AI 模型
+- PostgreSQL - 生产数据库
 
-### AI Integration:
-- **"Structured prompts with JSON schema enforcement"**
-- **"Mock mode fallback for demos without API key"**
-- **"Role-based prompting - LLM acts as compliance analyst, risk officer, or RM advisor"**
+### 前端架构
+```
+frontend/
+├── app/
+│   └── agents/
+│       └── page.tsx               # AI Agent Suite 页面
+└── components/                    # 可复用组件
+```
 
-### Search Functionality:
-**"The search is fully functional - try typing a client name and pressing Enter. It navigates to the Clients page with real-time filtering."**
-
----
-
-## WHY I BUILT THIS (1 minute)
-
-**"I built this demo because:"**
-
-1. **"I researched your company's product direction and wanted to show I understand the problem space"**
-2. **"I wanted to demonstrate my ability to deliver production-ready code quickly"**
-3. **"I believe in showing, not just telling - this proves I can contribute from day one"**
-
-**Key Capabilities Demonstrated:**
-- ✅ Full-stack development (Python + TypeScript)
-- ✅ AI/LLM integration with structured outputs
-- ✅ Modern UI/UX design following industry best practices
-- ✅ Domain expertise in financial compliance
-- ✅ Clean, maintainable, scalable code architecture
+**关键技术：**
+- Next.js 14 - 现代 React 框架
+- TypeScript - 类型安全
+- Tailwind CSS - 响应式设计
+- 实时更新 - 无需刷新页面
 
 ---
 
-## BUSINESS VALUE (1 minute)
+## 📈 业务价值 (1分钟)
 
-**"This platform delivers three core benefits:"**
+**"这个系统的业务价值："**
 
-### 1. Operational Efficiency
-**"Reduces KYC processing from days to minutes - 70% time savings"**
+### 效率提升
+- **70% 减少**人工 KYC 处理时间
+- **自动化合规检查**，原本需要数小时
+- **基于历史数据的智能决策**（RAG）
+- **实时风险监控**，而非定期审查
 
-### 2. Regulatory Compliance
-**"Creates comprehensive audit trails and ensures consistent risk assessment"**
+### 合规优势
+- **完整审计追踪** - 每个决策都有记录
+- **一致的风险评估** - 消除人为偏见
+- **自动化数据库检查** - PEP/制裁筛查
+- **监管报告** - 所有数据结构化可访问
 
-### 3. Enhanced Client Experience
-**"Faster onboarding and proactive risk management"**
-
-**ROI Example:**  
-**"For a mid-sized private bank with 500 annual KYC reviews, this could save 1,000+ hours and reduce compliance costs by 40-50%."**
-
----
-
-## PRODUCTION ROADMAP
-
-**"For production deployment, I would add:"**
-
-1. **Authentication & Authorization** - User roles and permissions
-2. **External Integrations** - Sanctions/PEP databases, core banking systems
-3. **Advanced Analytics** - Dashboards with charts and trends
-4. **Workflow Automation** - Approval chains and escalations
-5. **Mobile App** - On-the-go access for relationship managers
-6. **Security Hardening** - Encryption, audit logging, GDPR compliance
+### 可扩展性
+- **Multi-Agent 架构**可处理复杂工作流
+- **RAG 支持学习**历史案例
+- **Tool Calling 允许**轻松集成外部系统
+- **API 优先设计**支持未来集成
 
 ---
 
-## CLOSING
+## 🎯 结束语 (30秒)
 
-**"To summarize:"**
+**"总结一下今天的演示："**
 
-**"I've built a full-stack MVP that demonstrates:"**
-- Deep understanding of your business domain
-- Strong technical execution across the stack
-- Ability to integrate cutting-edge AI technology
-- Focus on user experience and business value
+1. ✅ **构建了生产级 AI Agent Suite** - 不只是演示
+2. ✅ **展示了 Multi-Agent、RAG、Tool Calling** - 核心 AI 能力
+3. ✅ **全栈实现** - 后端、前端、数据库
+4. ✅ **业务价值** - 70% 效率提升，自动化合规
 
-**"I'm excited about the opportunity to bring these skills to [Company Name] and help build the next generation of compliance technology."**
-
-**"I'm happy to answer any questions - technical, architectural, or about my approach to problem-solving."**
+**"我很兴奋有机会将这些能力带到贵公司，帮助构建下一代合规自动化平台。感谢您的时间，您有什么问题吗？"**
 
 ---
 
-## ANTICIPATED QUESTIONS & ANSWERS
+## 📝 备用演示（如果有时间）
 
-### Q: Why did you choose this tech stack?
+### 1. 展示 API 文档
+**导航到：** `http://localhost:8000/docs`
+- "FastAPI 自动生成交互式 API 文档"
+- "可以直接在这里测试任何端点"
 
-**A:** "I chose FastAPI because it's modern, fast, and has excellent async support - critical for AI integrations. Next.js provides optimal performance and developer experience. The stack mirrors what I've seen in successful fintech companies like Stripe and Plaid."
+### 2. 展示客户 360 视图
+**导航到：** `/clients` → 选择客户
+- "完整的客户档案"
+- "历史 KYC 记录"
+- "相关告警和案例"
 
----
-
-### Q: How long did this take you to build?
-
-**A:** "I spent approximately [X hours/days] on this. I focused on core functionality first, then refined the UI. The modular architecture means I can add features quickly - for example, the search functionality took about 30 minutes to implement."
-
----
-
-### Q: How would you handle production-scale data?
-
-**A:** "The architecture is designed for scale:
-- Stateless API allows horizontal scaling
-- Database indexing on frequently queried fields
-- Caching layer (Redis) for frequently accessed data
-- Async job queues for batch processing
-- The current design can handle 10,000+ clients without major refactoring."
+### 3. 展示案例管理
+**导航到：** `/cases`
+- "合规团队的工作台"
+- "案例优先级和状态跟踪"
+- "完整的审计追踪"
 
 ---
 
-### Q: What about AI accuracy and hallucinations?
+## 💬 常见问题准备
 
-**A:** "I use structured JSON prompts with strict schema validation to reduce hallucinations. The AI augments human decision-making rather than replacing it. In production, I'd add:
-- Confidence scores for AI outputs
-- Human review for low-confidence assessments
-- Continuous monitoring and feedback loops
-- A/B testing against human analysts"
+### Q: "RAG 系统如何工作？"
+**A:** "使用向量 embedding 查找相似历史案例。生产环境会用 Qdrant 或 Pinecone。相似度通过 cosine similarity 计算。检索 Top-3 最相关案例作为上下文提供给 Risk Assessor。"
 
----
+### Q: "如何处理 Agent 失败？"
+**A:** "每个 Agent 都有错误处理和优雅降级。失败时记录错误，可以指数退避重试或使用默认响应。Orchestrator 跟踪每个 Agent 状态，可以绕过失败。"
 
-### Q: How does this compare to existing solutions?
+### Q: "如何扩展到 10,000 客户？"
+**A:** "架构已经是异步优先。会添加：数据库索引、Redis 缓存、水平扩展、队列系统（Celery）、向量数据库优化。"
 
-**A:** "Existing tools like ComplyAdvantage focus on specific use cases. xBanker is a unified platform bringing together KYC, risk monitoring, and client insights. It's more like Salesforce for banking - a comprehensive CRM with built-in intelligence."
-
----
-
-### Q: What would you prioritize in the next sprint?
-
-**A:** "Based on user needs:
-1. User authentication and permissions (table stakes)
-2. Batch KYC upload (CSV import)
-3. Email notifications for high-risk alerts
-4. PDF report generation for audits
-5. Integration with core banking systems"
+### Q: "如何确保 AI 决策质量？"
+**A:** "多层保障：结构化提示、JSON schema 验证、置信度分数、高风险案例人工审核、A/B 测试、监控和日志。"
 
 ---
 
-### Q: Why do you want to work here?
+## 📚 后续材料
 
-**A:** "Three reasons:
-1. **Mission alignment** - I'm passionate about using technology to solve complex regulatory challenges
-2. **Technical challenge** - Building AI-powered fintech at scale is exactly the kind of problem I want to solve
-3. **Growth opportunity** - I want to work with a team that's pushing the boundaries of what's possible in compliance technology
+### 可分享的文档：
+- GitHub 仓库链接
+- 架构文档 (`ARCHITECTURE.md`)
+- 面试问答 (`INTERVIEW_QA.md`)
+- 系统简化说明 (`SYSTEM_SIMPLIFICATION.md`)
 
-This demo is my way of showing I'm ready to contribute from day one."
-
----
-
-## DEMO CHECKLIST
-
-**Before Demo:**
-- [ ] Backend running (`http://localhost:8000`)
-- [ ] Frontend running (`http://localhost:3000`)
-- [ ] Sample data ready to copy-paste
-- [ ] No console errors
-- [ ] Search functionality tested
-
-**During Demo:**
-- [ ] Speak clearly and confidently
-- [ ] Make eye contact
-- [ ] Show enthusiasm for the work
-- [ ] Be ready to go off-script if asked
-- [ ] If something breaks, explain what should happen
-
-**Mindset:**
-- [ ] Confident but humble
-- [ ] Ready to discuss trade-offs
-- [ ] Excited about the problem space
-- [ ] Open to feedback
-
----
-
-**Good luck! This demo shows initiative, technical skill, and business understanding - exactly what they're looking for.**
+### 下一步：
+- "很乐意讨论如何适配贵公司的具体需求"
+- "可以提供任何组件的更多技术细节"
+- "随时可以与工程团队进行技术深入讨论"
