@@ -24,8 +24,8 @@ except ImportError:
     class Style:
         BRIGHT = RESET_ALL = ""
 
-from orchestrator import get_orchestrator
-from config import config
+from .orchestrator import get_orchestrator
+from .config import config
 
 
 class DemoRunner:

@@ -12,9 +12,9 @@ import logging
 from typing import Dict, Any, List, Optional, Callable
 from datetime import datetime
 
-from tools.ocr_tool import OCRTool
-from tools.risk_score_tool import RiskScoreTool
-from tools.report_generator_tool import ReportGeneratorTool
+from .tools.ocr_tool import OCRTool
+from .tools.risk_score_tool import RiskScoreTool
+from .tools.report_generator_tool import ReportGeneratorTool
 
 logger = logging.getLogger(__name__)
 

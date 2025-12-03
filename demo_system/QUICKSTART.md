@@ -7,17 +7,17 @@ This is a quick reference for running the Multi-Agent + MCP demo system.
 ```bash
 # Install dependencies (from project root)
 cd /Users/lihaoyang/Desktop/xbanker.ai
+python3 -m venv venv
+source venv/bin/activate
 pip install numpy colorama
 
-# Navigate to demo system
-cd demo_system
-```
+
 
 ## Running the Demo
 
 ```bash
 # Interactive CLI demo
-python demo_runner.py
+python -m demo_system.demo_runner
 ```
 
 ## Testing Individual Components

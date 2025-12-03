@@ -84,13 +84,11 @@ cd demo_system
 python demo_runner.py
 ```
 
-See [`demo_system/README.md`](demo_system/README.md) for details.
-
 ---
 
 ## 🎬 Demo Walkthrough
 
-### Main Application (10-15 minutes)
+### Main Application
 
 1. **Dashboard** - View statistics and system overview
 2. **KYC Workflow** - Submit client info, view AI analysis results
@@ -98,14 +96,12 @@ See [`demo_system/README.md`](demo_system/README.md) for details.
 4. **Client 360** - View complete client profiles and AI insights
 5. **AI Agents** - Run multi-agent KYC workflow
 
-### Multi-Agent Demo (3-5 minutes)
+### Multi-Agent Demo
 
 Run `demo_system/demo_runner.py` to showcase:
 - **Scenario 1**: Full KYC Document Review (OCR → RAG → Risk → Report)
 - **Scenario 2**: Quick Risk Check (single tool call)
 - **Scenario 3**: Document Summary (complete RAG pipeline)
-
-See [`demo_system/docs/INTERVIEW_SCRIPT.md`](demo_system/docs/INTERVIEW_SCRIPT.md) for presentation script.
 
 ---
 
@@ -217,7 +213,6 @@ python -c "from agents.embedding_agent import EmbeddingAgent; print(EmbeddingAge
 
 ---
 
-## 🎯 Interview Highlights
 
 ### Technical Achievements
 - ✅ **Multi-Agent Orchestration** - 5 specialized agents working together
