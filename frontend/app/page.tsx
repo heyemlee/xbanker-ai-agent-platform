@@ -38,30 +38,42 @@ export default function HomePage() {
     }, []);
 
     const StatItem = ({ title, value, icon: Icon, trend, chart }: any) => (
-        <Card className="relative overflow-hidden h-[160px] flex flex-col justify-between" noPadding>
+        <Card
+            className="relative overflow-hidden h-[180px] flex flex-col justify-between animate-slide-in-up group"
+            noPadding
+            variant="gradient"
+        >
+            {/* Animated background gradient - business colors */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-700/10 via-slate-600/10 to-amber-700/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+            {/* Shimmer effect - gold tone */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-amber-500/10 to-transparent" />
+
             <div className="relative z-10 p-6 pb-16 flex flex-col h-full">
                 <div className="flex justify-between items-start">
                     <div>
-                        <p className="text-[15px] font-medium text-slate-500">{title}</p>
-                        <h3 className="text-[32px] font-bold text-slate-900 mt-1 tracking-tight">{value}</h3>
+                        <p className="text-[15px] font-medium text-slate-600 mb-1">{title}</p>
+                        <h3 className="text-[36px] font-bold bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 bg-clip-text text-transparent tracking-tight animate-scale-in">
+                            {value}
+                        </h3>
                     </div>
-                    <div className="w-8 h-8 rounded-lg bg-[#EEF1F5] flex items-center justify-center text-[#0A1A2F]">
-                        <Icon size={16} strokeWidth={2.5} />
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">
+                        <Icon size={18} strokeWidth={2.5} />
                     </div>
                 </div>
 
                 {trend && (
-                    <div className="flex items-center text-sm mt-2">
-                        <span className="text-[#059669] font-semibold flex items-center bg-[#059669]/10 px-1.5 py-0.5 rounded text-xs">
+                    <div className="flex items-center text-sm mt-3">
+                        <span className="text-emerald-600 font-semibold flex items-center bg-emerald-500/20 px-2 py-1 rounded-lg text-xs backdrop-blur-sm border border-emerald-500/30">
                             <ArrowUpRight size={14} className="mr-1" strokeWidth={2.5} />
                             {trend}
                         </span>
-                        <span className="text-slate-400 ml-2 text-xs font-medium">vs last month</span>
+                        <span className="text-slate-500 ml-2 text-xs font-medium">vs last month</span>
                     </div>
                 )}
             </div>
             {chart && (
-                <div className="absolute bottom-0 left-0 right-0 h-[40px] z-0 opacity-60 pointer-events-none">
+                <div className="absolute bottom-0 left-0 right-0 h-[50px] z-0 opacity-40 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none">
                     <StatsChart />
                 </div>
             )}
@@ -69,13 +81,16 @@ export default function HomePage() {
     );
 
     return (
-        <div className="space-y-8 animate-in fade-in duration-500">
+        <div className="space-y-8 animate-in fade-in duration-700 relative z-10">
             <PageHeader
                 title="Dashboard"
                 description="Overview of your compliance and risk landscape."
                 action={
                     <div className="flex gap-3">
-                        <Link href="/agents" className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white bg-brand text-white hover:bg-brand-dark h-9 px-4 py-2 shadow-sm">
+                        <Link
+                            href="/agents"
+                            className="inline-flex items-center justify-center rounded-xl text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-600 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-white bg-gradient-to-r from-slate-700 via-slate-800 to-slate-900 text-white hover:shadow-xl hover:shadow-amber-600/30 hover:scale-105 h-10 px-6 py-2 animate-pulse-glow border border-amber-600/20"
+                        >
                             Run AI Analysis
                         </Link>
                     </div>
@@ -157,7 +172,7 @@ export default function HomePage() {
                                 <div className="p-6 text-center text-slate-500">No recent alerts found.</div>
                             ) : (
                                 recentAlerts.map((alert) => (
-                                    <div key={alert.id} className="p-4 hover:bg-slate-50 transition-colors flex items-start gap-4">
+                                    <div key={alert.id} className="p-4 hover:bg-gradient-to-r hover:from-slate-200/80 hover:to-amber-100/60 transition-all duration-300 flex items-start gap-4 rounded-lg cursor-pointer group hover:shadow-md hover:border hover:border-amber-600/30 hover:scale-[1.01]">
                                         <div className={cn(
                                             "w-2 h-2 mt-2 rounded-full flex-shrink-0",
                                             alert.severity === 'High' ? "bg-danger-text" :
@@ -201,7 +216,7 @@ export default function HomePage() {
                                     <Link
                                         key={client.id}
                                         href={`/clients/${client.id}`}
-                                        className="block p-4 hover:bg-slate-50 transition-colors"
+                                        className="block p-4 hover:bg-gradient-to-r hover:from-slate-200/80 hover:to-amber-100/60 transition-all duration-300 rounded-lg group hover:shadow-md hover:border hover:border-amber-600/30 hover:scale-[1.01]"
                                     >
                                         <div className="flex justify-between items-center mb-1">
                                             <p className="text-sm font-medium text-slate-900">{client.full_name}</p>

@@ -88,35 +88,37 @@ export default function CasesPage() {
             />
 
             {/* Tabs */}
-            <div className="flex gap-2 mb-6 border-b border-slate-200">
-                <button
-                    onClick={() => setActiveTab('alerts')}
-                    className={cn(
-                        "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
-                        activeTab === 'alerts'
-                            ? "border-brand text-brand"
-                            : "border-transparent text-slate-500 hover:text-slate-700"
-                    )}
-                >
-                    <div className="flex items-center gap-2">
-                        <AlertTriangle size={16} />
-                        Open Alerts ({openAlerts.length})
-                    </div>
-                </button>
-                <button
-                    onClick={() => setActiveTab('cases')}
-                    className={cn(
-                        "px-4 py-2 text-sm font-medium border-b-2 transition-colors",
-                        activeTab === 'cases'
-                            ? "border-brand text-brand"
-                            : "border-transparent text-slate-500 hover:text-slate-700"
-                    )}
-                >
-                    <div className="flex items-center gap-2">
-                        <Briefcase size={16} />
-                        Active Cases ({cases.length})
-                    </div>
-                </button>
+            <div className="bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-lg border border-white/60 mb-6">
+                <div className="flex gap-2 border-b border-slate-200">
+                    <button
+                        onClick={() => setActiveTab('alerts')}
+                        className={cn(
+                            "px-4 py-2 text-sm font-medium border-b-2 transition-all duration-300",
+                            activeTab === 'alerts'
+                                ? "border-slate-800 text-slate-900"
+                                : "border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                        )}
+                    >
+                        <div className="flex items-center gap-2">
+                            <AlertTriangle size={16} />
+                            Open Alerts ({openAlerts.length})
+                        </div>
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('cases')}
+                        className={cn(
+                            "px-4 py-2 text-sm font-medium border-b-2 transition-all duration-300",
+                            activeTab === 'cases'
+                                ? "border-slate-800 text-slate-900"
+                                : "border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50"
+                        )}
+                    >
+                        <div className="flex items-center gap-2">
+                            <Briefcase size={16} />
+                            Active Cases ({cases.length})
+                        </div>
+                    </button>
+                </div>
             </div>
 
             {/* Open Alerts Tab */}

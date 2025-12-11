@@ -49,7 +49,7 @@ export default function AgentsPage() {
 
         for (let i = 0; i < steps.length; i++) {
             setCurrentStep(i + 1);
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await new Promise(resolve => setTimeout(resolve, 1000)); // 从1500ms减到1000ms
         }
 
         try {
@@ -66,7 +66,7 @@ export default function AgentsPage() {
 
             // Animate through steps
             for (let i = 0; i <= data.workflow_execution.length; i++) {
-                await new Promise(resolve => setTimeout(resolve, 800));
+                await new Promise(resolve => setTimeout(resolve, 300)); // 从800ms减到300ms
                 setCurrentStep(i);
             }
         } catch (err) {
@@ -100,12 +100,26 @@ export default function AgentsPage() {
                 <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center gap-3">
                         <div className={cn(
-                            "w-10 h-10 rounded-lg flex items-center justify-center",
-                            isActive && "bg-brand text-white",
-                            isCompleted && !isActive && "bg-success-text text-white",
-                            !isActive && !isCompleted && "bg-slate-100 text-slate-400"
+                            "w-12 h-12 rounded-xl flex items-center justify-center relative overflow-hidden transition-all duration-500",
+                            isActive && "bg-gradient-to-br from-slate-700 to-slate-900 shadow-xl shadow-amber-600/30 scale-110 animate-pulse-glow",
+                            isCompleted && !isActive && "bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg",
+                            !isActive && !isCompleted && "bg-slate-100"
                         )}>
-                            {getIcon()}
+                            {/* Background glow effect */}
+                            {isActive && (
+                                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-amber-600/20 animate-pulse" />
+                            )}
+                            {/* Logo */}
+                            <img
+                                src="/xBanker_logo.png"
+                                alt="Agent"
+                                className={cn(
+                                    "w-8 h-8 object-contain relative z-10 transition-all duration-500",
+                                    isActive && "brightness-0 invert",
+                                    isCompleted && !isActive && "brightness-0 invert",
+                                    !isActive && !isCompleted && "opacity-40"
+                                )}
+                            />
                         </div>
                         <div>
                             <h3 className="font-bold text-slate-900">{step.agent_name}</h3>
@@ -117,7 +131,7 @@ export default function AgentsPage() {
                     )}
                     {isActive && !isCompleted && (
                         <div className="animate-spin">
-                            <Clock className="text-brand" size={20} />
+                            <Clock className="text-amber-600" size={20} />
                         </div>
                     )}
                 </div>
@@ -380,7 +394,7 @@ export default function AgentsPage() {
                             <Button
                                 type="submit"
                                 isLoading={loading}
-                                className="w-full bg-brand hover:bg-brand-dark text-white font-medium py-2.5"
+                                className="w-full font-medium py-2.5"
                             >
                                 <Play className="mr-2 h-4 w-4" />
                                 Run Workflow
@@ -446,10 +460,21 @@ export default function AgentsPage() {
                     {loading && (
                         <div className="flex items-center justify-center py-12">
                             <div className="text-center space-y-4">
-                                <div className="relative w-20 h-20 mx-auto">
-                                    <div className="absolute inset-0 border-4 border-slate-100 rounded-full"></div>
-                                    <div className="absolute inset-0 border-4 border-brand border-t-transparent rounded-full animate-spin"></div>
-                                    <Brain className="absolute inset-0 m-auto text-brand" size={32} />
+                                <div className="relative w-24 h-24 mx-auto">
+                                    {/* Outer ring */}
+                                    <div className="absolute inset-0 border-4 border-slate-200 rounded-full"></div>
+                                    {/* Spinning ring with gradient - faster animation */}
+                                    <div className="absolute inset-0 border-4 border-transparent border-t-slate-700 border-r-amber-600 rounded-full animate-spin" style={{ animationDuration: '0.6s' }}></div>
+                                    {/* Inner glow */}
+                                    <div className="absolute inset-2 bg-gradient-to-br from-slate-700/10 to-amber-600/10 rounded-full animate-pulse"></div>
+                                    {/* Logo */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <img
+                                            src="/xBanker_logo.png"
+                                            alt="Processing"
+                                            className="w-12 h-12 object-contain animate-pulse"
+                                        />
+                                    </div>
                                 </div>
                                 <div>
                                     <h3 className="text-lg font-medium text-slate-900">AI Agents Working...</h3>
